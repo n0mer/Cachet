@@ -34,8 +34,7 @@ class IncidentController extends AbstractApiController
     {
         $incidentVisiblity = $auth->check() ? 0 : 1;
 
-        $incidents = Incident::where('visible', '>=', $incidentVisiblity)
-            ->paginate(Binput::get('per_page', 20));
+        $incidents = Incident::where('visible', '>=', $incidentVisiblity)->paginate(Binput::get('per_page', 20));
 
         return $this->paginator($incidents, $request);
     }
@@ -82,11 +81,7 @@ class IncidentController extends AbstractApiController
             event(new IncidentHasReportedEvent($incident));
         }
 
-        if ($incident->isValid()) {
-            return $this->item($incident);
-        }
-
-        throw new BadRequestHttpException();
+        return $this->item($incident);
     }
 
     /**
@@ -98,13 +93,13 @@ class IncidentController extends AbstractApiController
      */
     public function putIncident(Incident $incident)
     {
-        $incident->update(Binput::all());
-
-        if ($incident->isValid('updating')) {
-            return $this->item($incident);
+        try {
+            $incident->update(Binput::all());
+        } catch (Exception $e) {
+            throw new BadRequestHttpException();
         }
 
-        throw new BadRequestHttpException();
+        return $this->item($incident);
     }
 
     /**

@@ -11,10 +11,10 @@
 
 namespace CachetHQ\Cachet\Models;
 
+use AltThree\Validator\ValidatingTrait;
 use CachetHQ\Cachet\Presenters\SubscriberPresenter;
 use Illuminate\Database\Eloquent\Model;
 use McCool\LaravelAutoPresenter\HasPresenter;
-use Watson\Validating\ValidatingTrait;
 
 class Subscriber extends Model implements HasPresenter
 {

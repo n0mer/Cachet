@@ -11,12 +11,12 @@
 
 namespace CachetHQ\Cachet\Models;
 
+use AltThree\Validator\ValidatingTrait;
 use CachetHQ\Cachet\Presenters\ComponentPresenter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
-use Watson\Validating\ValidatingTrait;
 
 class Component extends Model implements HasPresenter
 {

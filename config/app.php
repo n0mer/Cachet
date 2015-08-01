@@ -150,6 +150,7 @@ return [
          * Packages Service Providers...
          */
         'AltThree\Emoji\EmojiServiceProvider',
+        'AltThree\Validator\ValidatorServiceProvider',
         'Barryvdh\Cors\CorsServiceProvider',
         'Fideloper\Proxy\TrustedProxyServiceProvider',
         'GrahamCampbell\Binput\BinputServiceProvider',
@@ -161,7 +162,6 @@ return [
         'McCool\LaravelAutoPresenter\LaravelAutoPresenterServiceProvider',
         'PragmaRX\Google2FA\Vendor\Laravel\ServiceProvider',
         'Roumen\Feed\FeedServiceProvider',
-        'Barryvdh\Cors\CorsServiceProvider',
 
         /*
          * Application Service Providers...

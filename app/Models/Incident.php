@@ -11,12 +11,12 @@
 
 namespace CachetHQ\Cachet\Models;
 
+use AltThree\Validator\ValidatingTrait;
 use CachetHQ\Cachet\Presenters\IncidentPresenter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use McCool\LaravelAutoPresenter\HasPresenter;
-use Watson\Validating\ValidatingTrait;
 
 class Incident extends Model implements HasPresenter
 {

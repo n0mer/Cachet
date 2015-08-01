@@ -57,11 +57,10 @@ class ComponentController extends AbstractController
 
         $this->subMenu['components']['active'] = true;
 
-        return View::make('dashboard.components.index')->with([
-            'page_title' => trans_choice('dashboard.components.components', 2).' - '.trans('dashboard.dashboard'),
-            'components' => $components,
-            'sub_menu'   => $this->subMenu,
-        ]);
+        return View::make('dashboard.components.index')
+            ->withPageTitle(trans_choice('dashboard.components.components', 2).' - '.trans('dashboard.dashboard'))
+            ->withComponents($components)
+            ->withSubMenu($this->subMenu);
     }
 
     /**
@@ -73,11 +72,10 @@ class ComponentController extends AbstractController
     {
         $this->subMenu['groups']['active'] = true;
 
-        return View::make('dashboard.components.groups.index')->with([
-            'page_title' => trans_choice('dashboard.components.groups.groups', 2).' - '.trans('dashboard.dashboard'),
-            'groups'     => ComponentGroup::orderBy('order')->get(),
-            'sub_menu'   => $this->subMenu,
-        ]);
+        return View::make('dashboard.components.groups.index')
+            ->withPageTitle(trans_choice('dashboard.components.groups.groups', 2).' - '.trans('dashboard.dashboard'))
+            ->withGroups(ComponentGroup::orderBy('order')->get())
+            ->withSubMenu($this->subMenu);
     }
 
     /**
@@ -117,16 +115,13 @@ class ComponentController extends AbstractController
         $_component = Binput::get('component');
         $tags = array_pull($_component, 'tags');
 
-        $component->update($_component);
-
-        if (!$component->isValid()) {
-            return Redirect::back()->withInput(Binput::all())
-                ->with('title', sprintf(
-                    '%s %s',
-                    trans('dashboard.notifications.whoops'),
-                    trans('dashboard.components.edit.failure')
-                ))
-                ->with('errors', $component->getErrors());
+        try {
+            $component->update($_component);
+        } catch (ValidationException $e) {
+            return Redirect::back()
+                ->withInput(Binput::all())
+                ->withTitle(sprintf('%s %s', trans('dashboard.notifications.whoops'), trans('dashboard.components.edit.failure')))
+                ->withErrors($component->getErrors());
         }
 
         // The component was added successfully, so now let's deal with the tags.
@@ -134,18 +129,12 @@ class ComponentController extends AbstractController
 
         // For every tag, do we need to create it?
         $componentTags = array_map(function ($taggable) use ($component) {
-            return Tag::firstOrCreate([
-                'name' => $taggable,
-            ])->id;
+            return Tag::firstOrCreate(['name' => $taggable])->id;
         }, $tags);
 
         $component->tags()->sync($componentTags);
 
-        $successMsg = sprintf(
-            '%s %s',
-            trans('dashboard.notifications.awesome'),
-            trans('dashboard.components.edit.success')
-        );
+        $successMsg = sprintf('%s %s', trans('dashboard.notifications.awesome'), trans('dashboard.components.edit.success'));
 
         return Redirect::back()->with('success', $successMsg);
     }
