@@ -69,13 +69,8 @@ class UserController extends AbstractController
                 ->with('errors', $user->getErrors());
         }
 
-        $successMsg = sprintf(
-            '%s %s',
-            trans('dashboard.notifications.awesome'),
-            trans('dashboard.team.edit.success')
-        );
-
-        return Redirect::back()->with('success', $successMsg);
+        return Redirect::back()
+            ->withSuccess(sprintf('%s %s', trans('dashboard.notifications.awesome'), trans('dashboard.team.edit.success')));
     }
 
     /**

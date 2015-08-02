@@ -29,10 +29,9 @@ class MetricController extends AbstractController
     {
         $metrics = Metric::orderBy('created_at', 'desc')->get();
 
-        return View::make('dashboard.metrics.index')->with([
-            'page_title' => trans('dashboard.metrics.metrics').' - '.trans('dashboard.dashboard'),
-            'metrics'    => $metrics,
-        ]);
+        return View::make('dashboard.metrics.index')
+            ->withPageTitle(trans('dashboard.metrics.metrics').' - '.trans('dashboard.dashboard'))
+            ->withMetrics($metrics);
     }
 
     /**
@@ -42,10 +41,8 @@ class MetricController extends AbstractController
      */
     public function showAddMetric()
     {
-        return View::make('dashboard.metrics.add')->with([
-            'page_title'         => trans('dashboard.metrics.add.title').' - '.trans('dashboard.dashboard'),
-            'metricMetricPoints' => MetricPoint::all(),
-        ]);
+        return View::make('dashboard.metrics.add')
+            ->withPageTitle(trans('dashboard.metrics.add.title').' - '.trans('dashboard.dashboard'));
     }
 
     /**
@@ -55,10 +52,9 @@ class MetricController extends AbstractController
      */
     public function showMetricPoints()
     {
-        return View::make('dashboard.metrics.points.index')->with([
-            'page_title'         => trans('dashboard.metrics.points.title').' - '.trans('dashboard.dashboard'),
-            'metricMetricPoints' => MetricPoint::all(),
-        ]);
+        return View::make('dashboard.metrics.points.index')
+            ->withPageTitle(trans('dashboard.metrics.points.title').' - '.trans('dashboard.dashboard'))
+            ->withMetrics(MetricPoint::all());
     }
 
     /**

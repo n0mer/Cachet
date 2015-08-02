@@ -72,12 +72,7 @@ class IncidentController extends AbstractApiController
             throw new BadRequestHttpException();
         }
 
-        $isEnabled = (bool) Setting::get('enable_subscribers', false);
-        $mailAddress = env('MAIL_ADDRESS', false);
-        $mailFrom = env('MAIL_NAME', false);
-        $subscribersEnabled = $isEnabled && $mailAddress && $mailFrom;
-
-        if (array_get($incidentData, 'notify') && $subscribersEnabled) {
+        if (array_get($incidentData, 'notify') && subscribers_enabled()) {
             event(new IncidentHasReportedEvent($incident));
         }
 

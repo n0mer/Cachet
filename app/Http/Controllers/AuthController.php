@@ -37,8 +37,6 @@ class AuthController extends AbstractController
      * Logs the user in.
      *
      * @return \Illuminate\Http\RedirectResponse
-     *
-     * @return void
      */
     public function postLogin()
     {

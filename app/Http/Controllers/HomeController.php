@@ -105,6 +105,5 @@ class HomeController extends AbstractController
             ->withPreviousDate($startDate->copy()->subDays($daysToShow)->toDateString())
             ->withNextDate($startDate->copy()->addDays($daysToShow)->toDateString())
             ->withPageTitle(Setting::get('app_name'));
-        ]);
     }
 }

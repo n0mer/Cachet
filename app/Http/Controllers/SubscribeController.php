@@ -50,11 +50,10 @@ class SubscribeController extends AbstractController
                 ->withErrors($subscriber->getErrors());
         }
 
-        $successMsg = sprintf('<strong>%s</strong> %s', trans('dashboard.notifications.awesome'), trans('cachet.subscriber.email.subscribed'));
-
         event(new CustomerHasSubscribedEvent($subscriber));
 
-        return Redirect::route('status-page')->withSuccess($successMsg);
+        return Redirect::route('status-page')
+            ->withSuccess(sprintf('<strong>%s</strong> %s', trans('dashboard.notifications.awesome'), trans('cachet.subscriber.email.subscribed')));
     }
 
     /**
@@ -79,9 +78,8 @@ class SubscribeController extends AbstractController
         $subscriber->verified_at = Carbon::now();
         $subscriber->save();
 
-        $successMsg = sprintf('<strong>%s</strong> %s', trans('dashboard.notifications.awesome'), trans('cachet.subscriber.email.verified'));
-
-        return Redirect::route('status-page')->withSuccess($successMsg);
+        return Redirect::route('status-page')
+            ->withSuccess(sprintf('<strong>%s</strong> %s', trans('dashboard.notifications.awesome'), trans('cachet.subscriber.email.verified')));
     }
 
     /**
@@ -105,8 +103,7 @@ class SubscribeController extends AbstractController
 
         $subscriber->delete();
 
-        $successMsg = sprintf('<strong>%s</strong> %s', trans('dashboard.notifications.awesome'), trans('cachet.subscriber.email.unsuscribed'));
-
-        return Redirect::route('status-page')->withSuccess($successMsg);
+        return Redirect::route('status-page')
+            ->withSuccess(sprintf('<strong>%s</strong> %s', trans('dashboard.notifications.awesome'), trans('cachet.subscriber.email.unsuscribed')));
     }
 }
